@@ -18,7 +18,7 @@ SMSNUMBER = "1231231234"
 
 carriers = {
     'att':    '@txt.att.net',
-    'tmobile':' @tmomail.net',
+    'tmobile': ' @tmomail.net',
     'verizon':  '@vtext.com',
     "boost": "smsmyboostmobile.com",
     "cricket": "sms.cricketwireless.net",
@@ -26,6 +26,7 @@ carriers = {
 }
 
 def sendSMS(message):
+    # Replace the number with your own, or consider using an argument\dict for multiple people.
     to_number = '{}{}'.format(SMSNUMBER, carriers[CARRIER])
     auth = (EMAIL, PWD)
     # Establish a secure session with gmail's outgoing SMTP server using your gmail account
@@ -69,7 +70,7 @@ def restockChecker(sku):
             log.info("Sending text notifications")
             skuName = driver.find_element(By.CLASS_NAME, "sku-title").text
             skuName = skuName.encode('ascii', 'ignore').decode('ascii')
-            msg = skuName + " " + urlBuilder(sku, True)
+            msg = skuName + " <==*==> " + urlBuilder(sku, True)
             sendSMS(msg)
             break
         except Exception as e:
@@ -77,7 +78,7 @@ def restockChecker(sku):
             log.info("sms notification attempt failed")
             sendSMS("text-notify script failed, manual restart required")
             break
-    #driver.quit()
+    driver.quit()
 
 if __name__ == "__main__":
     log.basicConfig(filename='events.log', filemode='w', encoding='utf-8', level=log.WARNING)
