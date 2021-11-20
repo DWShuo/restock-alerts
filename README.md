@@ -1,14 +1,12 @@
 # restock-alerts
 
-## Setup
-
-### Dependencies
+## Dependencies
 * [Python 3](https://www.python.org/downloads/)
 * [Pip](https://pypi.org/project/pip/)
 * [Selenium](https://www.selenium.dev/downloads/)
 * [fake-useragent](https://pypi.org/project/fake-useragent/)
 
-### Install
+## Install
 #### Linux
 1. Install python dependencies.
 ```sh
@@ -38,3 +36,22 @@ pip install -r requirements.txt
  ```python
  driver = webdriver.Firefox(options=options, executable_path=r'your\path\geckodriver.exe')
  ```
+## Usage
+Following variables need to be edited
+```
+#========================== Edit items =========================
+SKU = ["6356670", "6454329", "6468928", "6452573", "6468931"]
+EMAIL = "example@gmail.com"
+PWD = "example"
+CARRIER = "att" # att, tmobile, verizon, sprint, cricket, boost
+SMSNUMBER = "1231231234"
+#===============================================================
+```
+* **SKU**: contains a list of the SKUs to be monitored
+* **EMAIL**: email used to communicate with various carrier's email-to-text systems
+* **PWD**: password to said email
+* **CARRIER**: specify which carrier you mobile device is using
+* **SMSNUMBER**: phone number where you want to receive alerts 
+
+Once the you have edited the required variables simply run
+`python restock-alert.py`
