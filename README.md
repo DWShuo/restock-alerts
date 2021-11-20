@@ -1,4 +1,9 @@
 # restock-alerts
+Python script used to monitor and notify the user when an item is restocked.
+
+Monitor multiple items with multithreading
+
+Text notification with link is sent to the user when item is restocked.
 
 ## Dependencies
 * [Python 3](https://www.python.org/downloads/)
