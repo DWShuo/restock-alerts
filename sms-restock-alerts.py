@@ -2,7 +2,6 @@ import smtplib
 import logging as log
 from threading import Thread
 from selenium import webdriver
-from fake_useragent import UserAgent
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
@@ -44,13 +43,10 @@ def urlBuilder(sku, SMS=False):
 
 def restockChecker(sku):
     # Basic anti-bot detection countermeasures
-    ua = UserAgent()
-    uaRand = ua.random
     options=Options()
     options.headless = True
     options.set_preference("dom.webdriver.enabled", False)
     options.set_preference('useAutomationExtension', False)
-    options.set_preference("general.useragent.override", f"{uaRand}")
     driver = webdriver.Firefox(options=options)
     
     driver.get(urlBuilder(sku))
