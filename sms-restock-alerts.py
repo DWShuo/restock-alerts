@@ -35,7 +35,7 @@ def sendSMS(message):
     # Send text message through SMS gateway of destination number
     server.sendmail( auth[0], to_number, message)
 
-def urlBuilder(sku, SMS=False):
+def urlBuilder(sku, SMS=False): # bypass sms filtering links as spam
     if not SMS:
         return "https://www.bestbuy.com/site/" + sku + ".p?skuId=" + sku
     else:
