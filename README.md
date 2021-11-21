@@ -1,9 +1,14 @@
 # restock-alerts
-Python script used to monitor and notify the user when an item is restocked.
+Python scripts used to monitor and notify the user when an item is restocked. ( Currently only bestbuy is supported)
 
 Monitor multiple items with multithreading
 
-Text notification with link is sent to the user when item is restocked.
+Currently there are two types of notifications, SMS text notification and discord server notification.
+
+SMS text notification uses the carrier's mail-to-text feature. There seems to be some delays / relability issues depending on the carrier.
+
+### New features
+Looking to integrate more stores and alert platforms soon.
 
 ## Dependencies
 * [Python 3](https://www.python.org/downloads/)
@@ -33,7 +38,7 @@ pip install -r requirements.txt
 ```
 2. Install latest version of Firefox
 3. Find and download the latest release of Mozilla [Geckodriver](https://github.com/mozilla/geckodriver/releases)
-4. Find the following line of code in *-restock-alerts.py
+4. Find the following line of code in <*>-restock-alerts.py
  ```python
  driver = webdriver.Firefox(options=options)
  ```
