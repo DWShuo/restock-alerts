@@ -12,11 +12,8 @@ SKU = ["6356670", "6454329", "6468928", "6452573", "6468931"] #replace with desi
 DISCORD_WEBHOOK = "https://discord.com/api/webhooks/..." #replace with your discord server webhook
 #===============================================================
 
-def urlBuilder(sku, SMS=False):
-    if not SMS:
-        return "https://www.bestbuy.com/site/" + sku + ".p?skuId=" + sku
-    else:
-        return "bestbuy.com/site/" + sku + ".p?skuId=" + sku
+def urlBuilder(sku):
+    return "https://www.bestbuy.com/site/" + sku + ".p?skuId=" + sku
 
 def discordSend(msg):
     data = {"content": "{}".format(msg)}
@@ -48,7 +45,7 @@ def restockChecker(sku):
             log.info("Sending discord notifications")
             skuName = driver.find_element(By.CLASS_NAME, "sku-title").text
             skuName = skuName.encode('ascii', 'ignore').decode('ascii')
-            msg = "ITEM RESTOCK:\n" + skuName + "\n" + urlBuilder(sku, False)
+            msg = "ITEM RESTOCK:\n" + skuName + "\n" + urlBuilder(sku)
             discordSend(msg)
             break
         except Exception as e:
