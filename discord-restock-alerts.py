@@ -1,3 +1,5 @@
+import sys
+import ast
 import requests
 import logging as log
 from threading import Thread
@@ -7,13 +9,11 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait as driverWait
 
-#==================  Edit item =================================
-SKU = ["6356670", "6454329", "6468928", "6452573", "6468931"] #replace with desired SKU
-DISCORD_WEBHOOK = "https://discord.com/api/webhooks/..." #replace with your discord server webhook
-#===============================================================
-
-def urlBuilder(sku):
-    return "https://www.bestbuy.com/site/" + sku + ".p?skuId=" + sku
+def urlBuilder(sku, SMS=False): # bypass sms filtering links as spam
+    if not SMS:
+        return "https://www.bestbuy.com/site/" + sku + ".p?skuId=" + sku
+    else:
+        return "bestbuy.com/site/" + sku + ".p?skuId=" + sku
 
 def discordSend(msg):
     data = {"content": "{}".format(msg)}
@@ -23,7 +23,7 @@ def discordSend(msg):
 
 def restockChecker(sku):
     # Basic anti-bot detection countermeasures
-    options=Options()
+    options = Options()
     options.headless = True
     options.set_preference("dom.webdriver.enabled", False)
     options.set_preference('useAutomationExtension', False)
@@ -55,11 +55,17 @@ def restockChecker(sku):
     driver.quit()
 
 if __name__ == "__main__":
+    SKU = ast.literal_eval(sys.argv[1])  # read argv[1] as list of SKUs
+    DISCORD_WEBHOOK = sys.argv[2]  # read argc[2] as webhook url
+
+    print(SKU)
+    print(DISCORD_WEBHOOK)
+
     log.basicConfig(filename='events.log', filemode='w', encoding='utf-8', level=log.WARNING)
-    #spin up new process for each item in back ground
+    # spin up new process for each item in back ground
     threads = []
     for each in SKU:
-        t = Thread(target=restockChecker, args=[each])
+        t = Thread(target=restockChecker, args=[str(each)])
         t.start()
         threads.append(t)
     for each in threads:

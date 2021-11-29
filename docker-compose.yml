@@ -1,0 +1,13 @@
+version: "3.9"
+#----- Edit SKU and Webhook below -----
+x-var: &SKU
+  "[6321917,6435180,6429442]" # Replace with Bestbuy SKU
+x-var: &WEBHOOK
+  "https://discord.com/api/webhooks/..." # Replace with your own discord webhook
+#--------------------------------------
+services:
+  main:
+    build: .
+    environment:
+      PYTHONUNBUFFERED: 1
+    command: [*SKU , *WEBHOOK]
